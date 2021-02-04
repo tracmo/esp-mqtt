@@ -629,6 +629,9 @@ esp_mqtt_client_handle_t esp_mqtt_client_init(const esp_mqtt_client_config_t *co
 #if MQTT_ENABLE_WSS
     esp_transport_handle_t wss = esp_transport_ws_init(ssl);
     ESP_MEM_CHECK(TAG, wss, goto _mqtt_init_failed);
+    if(config->headers != NULL) {
+        esp_transport_ws_set_headers(wss, config->headers);
+    }
 #ifdef MQTT_SUPPORTED_FEATURE_WS_SUBPROTOCOL
     esp_transport_ws_set_subprotocol(wss, "mqtt");
 #endif
